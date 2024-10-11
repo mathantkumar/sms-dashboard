@@ -10,7 +10,7 @@ const Header = () => {
           <h1 className="text-2xl font-bold">SMSense</h1>
         </div>
         <nav>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-10 font-bold">
             <li>
               <a href="#about" className="hover:underline">
                 About
@@ -32,13 +32,8 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a href="#resources" className="hover:underline">
-                Resources
-              </a>
-            </li>
-            <li>
-              <a href="#ourblog" className="hover:underline">
-                Our Blog
+              <a href="#blog" className="hover:underline">
+                Blog
               </a>
             </li>
             <li>
