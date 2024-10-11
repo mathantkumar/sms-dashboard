@@ -1,7 +1,5 @@
 import axios from "axios";
 
-//const API_BASE_URL = "https://smsense.vercel.app";
-
 export const fetchStatistics = async () => {
   const response = await axios.get(`/stats`);
   return response.data;
