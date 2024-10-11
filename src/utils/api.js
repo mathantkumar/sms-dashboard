@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL =
-  "sms-dashboard-8i6s2ypfa-mathantkumars-projects.vercel.app";
+const API_BASE_URL = "smsense.vercel.app";
 
 export const fetchStatistics = async () => {
   const response = await axios.get(`${API_BASE_URL}/stats`);
