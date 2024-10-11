@@ -57,7 +57,14 @@ const Dashboard = () => {
           <RateLimitViolations violations={rateLimitViolations} />
         </div>
 
-        <ToastContainer />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick
+          draggable
+          pauseOnHover
+        />
         <Footer />
       </div>
     </>

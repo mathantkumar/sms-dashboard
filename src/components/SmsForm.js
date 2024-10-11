@@ -5,7 +5,17 @@ import { sendSms } from "../utils/api";
 const SmsForm = ({ onSmsSent }) => {
   const [phone, setPhone] = useState("");
 
+  const isValidPhoneNumber = (number) => {
+    const phoneRegex = /^\d{10}$/; //to check for 10-digit numbers
+    return phoneRegex.test(number);
+  };
+
   const handleSubmit = async () => {
+    if (!isValidPhoneNumber(phone)) {
+      toast.error("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
     try {
       await sendSms(phone);
       toast.success("SMS sent successfully!");
@@ -30,7 +40,7 @@ const SmsForm = ({ onSmsSent }) => {
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
         placeholder="Enter phone number"
-        className="border p-2 rounded mb-2"
+        className="border p-2 rounded mb-2 mr-5"
       />
       <button
         onClick={handleSubmit}
