@@ -9,8 +9,7 @@ import {
   BarElement,
 } from "chart.js";
 import { Doughnut, Bar } from "react-chartjs-2";
-import axios from "axios"; // Ensure axios is imported
-import { toast } from "react-toastify"; // Import toast for notifications
+import { toast } from "react-toastify";
 
 ChartJS.register(
   ArcElement,
@@ -43,7 +42,6 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday, fetchViolations }) => {
   ];
   const labels = [];
 
-  // Generate labels for the last 7 days
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
