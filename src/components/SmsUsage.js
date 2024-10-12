@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -9,6 +9,8 @@ import {
   BarElement,
 } from "chart.js";
 import { Doughnut, Bar } from "react-chartjs-2";
+import axios from "axios"; // Ensure axios is imported
+import { toast } from "react-toastify"; // Import toast for notifications
 
 ChartJS.register(
   ArcElement,
@@ -19,14 +21,14 @@ ChartJS.register(
   BarElement
 );
 
-const SmsUsage = ({ smsCountLastMinute, totalSmsToday }) => {
+const SmsUsage = ({ smsCountLastMinute, totalSmsToday, fetchViolations }) => {
   const maxSmsPerMinute = 3;
   const maxSmsPerDay = 10;
+  const [canSendSms, setCanSendSms] = useState(true);
 
-  // Count doesn't exceed the maximum limit
   const validSmsCount = Math.min(smsCountLastMinute, maxSmsPerMinute);
 
-  // mock data for the past 6 days
+  // Mock data for the past 6 days
   const pastSmsCounts = [5, 7, 4, 6, 3, 8];
 
   const today = new Date();
@@ -41,7 +43,7 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday }) => {
   ];
   const labels = [];
 
-  // generate labels for the last 7 days
+  // Generate labels for the last 7 days
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
@@ -77,12 +79,8 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday }) => {
     maintainAspectRatio: false,
     cutout: "70%",
     plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
+      legend: { display: false },
+      tooltip: { enabled: false },
     },
   };
 
@@ -90,16 +88,21 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday }) => {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      y: {
-        beginAtZero: true,
-      },
+      y: { beginAtZero: true },
     },
     plugins: {
-      legend: {
-        display: true,
-      },
+      legend: { display: true },
     },
   };
+
+  useEffect(() => {
+    if (totalSmsToday >= maxSmsPerDay) {
+      setCanSendSms(false);
+      toast.error("Daily limit reached. Please try after next 24 hours.");
+    } else {
+      setCanSendSms(true);
+    }
+  }, [totalSmsToday]);
 
   return (
     <div className="flex flex-col w-full p-4 border rounded shadow-md bg-gray-100">
@@ -132,7 +135,7 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday }) => {
           <p className="mt-2">
             Total SMS Sent Today: {totalSmsToday} / {maxSmsPerDay}
           </p>
-          {totalSmsToday >= maxSmsPerDay && (
+          {!canSendSms && (
             <p className="text-red-600">
               Alert: You have reached the maximum daily SMS limit of{" "}
               {maxSmsPerDay}!
