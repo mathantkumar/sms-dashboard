@@ -54,7 +54,7 @@ const SmsUsage = ({ smsCountLastMinute, totalSmsToday, fetchViolations }) => {
       {
         label: "Total SMS Sent",
         data: [...pastSmsCounts, totalSmsToday],
-        backgroundColor: "#FF6384",
+        backgroundColor: "#36A2EB",
         barThickness: 26,
       },
     ],
