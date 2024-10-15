@@ -1,4 +1,3 @@
-// src/App.js
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
